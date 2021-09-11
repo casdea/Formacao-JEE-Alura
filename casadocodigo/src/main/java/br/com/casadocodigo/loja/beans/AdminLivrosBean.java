@@ -1,7 +1,6 @@
 package br.com.casadocodigo.loja.beans;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import javax.enterprise.context.RequestScoped;
@@ -9,6 +8,7 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import javax.transaction.Transactional;
 
+import br.com.casadocodigo.loja.dao.AutoDao;
 import br.com.casadocodigo.loja.dao.LivroDao;
 import br.com.casadocodigo.loja.model.Autor;
 import br.com.casadocodigo.loja.model.Livro;
@@ -24,11 +24,20 @@ public class AdminLivrosBean {
 	@Inject
 	private LivroDao livroDao;
 
+	@Inject
+	private AutoDao autorDao;
+
 	@Transactional
-	public void salvar() {
+	public String salvar() {
+		for (Long autorId : autoresId) {
+			livro.getAutores().add(new Autor(autorId));
+		}
+		
 		System.out.println(autoresId);
 		livroDao.salvar(livro);
 		System.out.println("Livro Salvo " + livro.toString());
+	
+		return "/livros/lista?faces-redirect=true";
 	}
 
 	public Livro getLivro() {
@@ -40,7 +49,7 @@ public class AdminLivrosBean {
 	}
 
 	public List<Autor> getAutores() {
-		return Arrays.asList(new Autor(1L, "CARLOS"), new Autor(2L, "MANOEL"));
+		return autorDao.listar();
 	}
 
 	public List<Long> getAutoresId() {

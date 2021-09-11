@@ -13,6 +13,15 @@ public class Autor {
 	private Long id;
 	private String nome;
 
+	public Autor() {
+		super();
+	}
+
+	public Autor(Long id) {
+		super();
+		this.id = id;
+	}
+
 	public Autor(Long id, String nome) {
 		super();
 		this.id = id;
