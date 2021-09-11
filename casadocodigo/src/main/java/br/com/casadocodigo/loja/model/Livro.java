@@ -10,7 +10,7 @@ import javax.persistence.Lob;
 
 @Entity
 public class Livro {
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
